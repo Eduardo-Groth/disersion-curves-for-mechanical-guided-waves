@@ -10,14 +10,14 @@ model=ModelUtil.create('Model');
 model.modelPath('C:\Program Files\COMSOL\COMSOL44');
 model.name('SAFE_arame_de_riser.mph');
 
-%% Prâmetros
+%% PrÃ¢metros
 
-model.param.set('C11', '281.8e9[Pa]'); % módulo de Young
+model.param.set('C11', '281.8e9[Pa]'); % mÃ³dulo de Young
 model.param.set('C22', 'C11');
 model.param.set('C33', 'C11');
 model.param.set('C44', 'C66');
 model.param.set('C55', 'C66');
-model.param.set('C66', '84.3e9[Pa]'); % módulo de cisalhamento
+model.param.set('C66', '84.3e9[Pa]'); % mÃ³dulo de cisalhamento
 model.param.set('C12', 'C11-2*C66');
 model.param.set('C13', 'C12');
 model.param.set('C23', 'C12');
@@ -25,8 +25,8 @@ model.param.set('rho', '7.932e3[kg/m^3]'); % densidade
 model.param.set('VLsteel', 'sqrt(C11/rho)');
 model.param.set('VTsteel', 'sqrt(C66/rho)');
 model.param.set('f', '100e3 [Hz]');
-model.param.set('W', '15e-3'); % base da seção
-model.param.set('H', '5e-3'); % altura da seção
+model.param.set('W', '15e-3'); % base da seÃ§Ã£o
+model.param.set('H', '5e-3'); % altura da seÃ§Ã£o
 model.param.set('FL', '0.0000001'); % filete
 %%
 
@@ -175,13 +175,11 @@ for fx = 1:limite
     incremento_frequencia(fx)=fx*1000;
     model.study('std1').feature('eigv').set('neigs', num2str(sprintf('%1.0f',autovalores)));
     model.study('std1').feature('eigv').set('shift', num2str(PAR.no_pts));
-    % parte extraída do sol_and_par
     model.param.set('f', num2str(incremento_frequencia(fx)));
-    %model.sol('sol1').feature('e1').set('shift', num2str(PAR.no_pts)); %%%Set COMSOL number around
     model.sol('sol1').feature('e1').set('shift', num2str(PAR.no_pts));
-    model.sol('sol1').feature('e1').set('neigs', num2str(sprintf('%1.0f',autovalores))); %%%Set COMSOL number of Eigenvalue
+    model.sol('sol1').feature('e1').set('neigs', num2str(sprintf('%1.0f',autovalores)));
     %model.sol('sol1').feature('e1').set('neigs', num2str( sprintf('%1.0f',PAR.eig_no)));
-    model.sol('sol1').runAll;%%% RUN COLSOL MODEL
+    model.sol('sol1').runAll;
  
     %%% READ ALL SOLUTIONS
 
@@ -202,12 +200,12 @@ clc
 ii=0;
 for i=1:limite
     for j=1:autovalores
-%         if abs(matriz_lambda_imaginario(j,i))>1e-3
-%            matriz_lambda(j,i)=NaN;
-%         end
-%         if matriz_lambda(j,i)<=0
-%            matriz_lambda(j,i)=NaN;
-%         end
+         if abs(matriz_lambda_imaginario(j,i))>1e-3
+            matriz_lambda(j,i)=NaN;
+         end
+         if matriz_lambda(j,i)<=0
+           matriz_lambda(j,i)=NaN;
+         end
         if matriz_lambda(j,i)>0
         ii=ii+1;
         a(ii,1)=i;
@@ -220,7 +218,7 @@ end
 %%%%%%% dispersion curves
 h=figure; 
 hold on
-title('Curvas de dispersão','fontsize',14)
+title('Curvas de dispersÃ£o','fontsize',14)
 set(gca,'fontsize', 14)
 for i=1:limite
     plot(matriz_lambda(:,i),vetor_frequencia(:,i),'o')
@@ -238,7 +236,7 @@ set(gca,'fontsize', 14)
 for i=1:limite
 plot(vetor_frequencia(:,i),vph(:,i),'*k')
 ylabel('Velocidade de fase [m/s]','fontsize',14)
-xlabel('Frequência [Hz]','fontsize',14)
+xlabel('FrequÃªncia [Hz]','fontsize',14)
 axis([0 1e5 0 9000])
 end
 clc
@@ -268,10 +266,4 @@ set(gca,'fontsize',1)
 trimesh(tri,x,y,real(modos(a(ii,1)).deslocamentos.d1(a(ii,2),:)));title('u_z')
 axis off
 end
-
-
- 
-
-
-
 
