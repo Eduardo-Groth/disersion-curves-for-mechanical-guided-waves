@@ -1,5 +1,5 @@
 # disersion-curves-for-mechanical-guided-waves
-codes and wors, insights about semi analical methods for calculate de dispersion curves for mechanical guided waves
+codes and works, insights about semi analical methods for calculate de dispersion curves for mechanical guided waves
 ###########
 1- safe_retangular.m
 this routine is done to use in matlab with comsol package , is just use, enjoy
